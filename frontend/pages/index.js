@@ -7,5 +7,5 @@ const Index = () => (
     </Link>
   </div>
 );
-
+//
 export default Index;
