@@ -1,15 +1,17 @@
 import Link from "next/link";
+import Layout from '../components/Layout'
+import fetch from 'isomorphic-unfetch'
 
 const dummy = [
   {
     name: "taesu",
     title: "안녕하세요!",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged"
+    content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged"
   },
   {
     name: "haneul",
     title: "hello!",
-    text: " It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+    content: " It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
   }
 ]
 
@@ -31,7 +33,7 @@ const ListItem = data => {
   return (
     <tr>
       <td style={tdStyle}>
-        <Link href="/view">
+        <Link as={`/p/${data.id}`} href={`/post?id=${data.id}`}>
           <a>{data.title}</a>
         </Link>
       </td>
@@ -44,8 +46,8 @@ const ListItem = data => {
   )
 }
 
-const Index = () => (
-  <div>
+const Index = (props) => (
+  <Layout>
     <table>
       <thead>
         <tr>
@@ -55,9 +57,10 @@ const Index = () => (
         </tr>
       </thead>
       <tbody>
-        {dummy.map((data, index) =>
+        {props.data.map((data, index) =>
           <ListItem key={index}
-                    name={data.name}
+                    id={data.id}
+                    name={data.id}
                     title={data.title} />
         )}
       </tbody>
@@ -82,7 +85,18 @@ const Index = () => (
         text-align: left;
       }
     `}</style>
-  </div>
+  </Layout>
 );
+
+Index.getInitialProps = async function() {
+  const res = await fetch('http://mugle.org/PilotBoard/select')
+  const data = await res.json()
+  
+  console.log(`Show data fetched. Count: ${data.length}`)
+
+  return {
+    data
+  }
+}
 
 export default Index;
