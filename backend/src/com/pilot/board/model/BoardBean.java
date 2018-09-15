@@ -2,7 +2,7 @@ package com.pilot.board.model;
 
 public class BoardBean {
 	
-	
+	private String seq;
 	private String id;
 	private String content;
 	private String title;
@@ -24,6 +24,12 @@ public class BoardBean {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public String getSeq() {
+		return seq;
+	}
+	public void setSeq(String seq) {
+		this.seq = seq;
 	}
 	
 	

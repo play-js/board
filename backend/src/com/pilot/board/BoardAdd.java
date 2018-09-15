@@ -1,3 +1,4 @@
+package com.pilot.board;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.pilot.board.model.BoardDAO;
 
 @WebServlet("/create")
-public class Board extends HttpServlet {
+public class BoardAdd extends HttpServlet {
 		
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
@@ -19,7 +20,7 @@ public class Board extends HttpServlet {
 		String id = req.getParameter("id");
 		String title = req.getParameter("title");
 		
-		BoardDAO dao = new BoardDAO();
+		BoardDAO dao = BoardDAO.getInstance();
 		
 		dao.createPost(content, id, title);
 		

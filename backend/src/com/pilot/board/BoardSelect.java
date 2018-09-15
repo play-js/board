@@ -20,7 +20,7 @@ public class BoardSelect extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 	throws ServletException, IOException {
 
-		BoardDAO dao = new BoardDAO();
+		BoardDAO dao = BoardDAO.getInstance();
 		
 		List<BoardBean> list = dao.selectPost();
 		
