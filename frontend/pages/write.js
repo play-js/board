@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from '../components/Layout.js'
+import fetch from 'isomorphic-unfetch'
 
 class Write extends React.Component {
   constructor(props) {
@@ -19,8 +20,27 @@ class Write extends React.Component {
       this.setState({[value]: e.target.value})
   }
 
-  handleSubmit (data) {
-//mugle.org/PilotBoard/create?id=test123&content=하이루~
+  async handleSubmit () {
+    const req = await fetch(`http://mugle.org/PilotBoard/create?id=${this.state.name}&content=${this.state.text}`)
+    const data = await req.json()
+    
+    console.log(`Show data fetched. Count: ${data.length}`)
+
+    // return fetch(`http://mugle.org/PilotBoard/create?id=${this.state.name}&content=${this.state.text}`, {
+    //     method: 'POST',
+    //     body: JSON.stringify(data),
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     }
+    // }).then(response => {
+    //     if (response.status >= 200 && response.status < 300) {
+    //         return response;
+    //         console.log(response);
+    //         window.location.reload();
+    //       } else {
+    //       console.log('Somthing happened wrong');
+    //       }
+    // }).catch(err => err);
   }
 
   render() {
