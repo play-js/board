@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Layout from "../components/Layout";
+import Button from "../components/Button";
 import fetch from "isomorphic-unfetch";
 
 function getPosts() {
@@ -33,6 +34,18 @@ const PostLink = props => {
       <Link href={`/post?title=${props.title}?post=${props.post}`}>
         <a>{props.post.title}</a>
       </Link>
+      <div>
+        <Button onClick={() => console.log(123123)}>수정</Button>
+        <Button color="red">삭제</Button>
+      </div>
+      <style jsx>
+        {`
+          li {
+            display: flex;
+            justify-content: space-between;
+          }
+        `}
+      </style>
     </li>
   );
 };
@@ -50,7 +63,7 @@ const Index = props => (
       })}
     </ul>
     <Link href="/write">
-      <button>게시물 작성</button>
+      <Button>게시물 작성</Button>
     </Link>
   </Layout>
 );
