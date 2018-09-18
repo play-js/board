@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Layout from "../components/Layout";
+import fetch from "isomorphic-unfetch";
 
 function getPosts() {
   return [
@@ -25,7 +26,7 @@ function getPosts() {
 }
 
 const PostLink = props => {
-  console.log(props.post);
+  // console.log(props.post);
 
   return (
     <li>
@@ -36,12 +37,11 @@ const PostLink = props => {
   );
 };
 
-const Index = () => (
+const Index = props => (
   <Layout>
     <h1>게시판</h1>
     <ul>
-      {getPosts().map((post, index) => {
-        console.log(post);
+      {props.data.map((post, index) => {
         return post.title ? (
           <PostLink key={index} post={post} title={post.title}>
             <a>{post.title}</a>
@@ -54,5 +54,12 @@ const Index = () => (
     </Link>
   </Layout>
 );
-//
+
+Index.getInitialProps = async function() {
+  const res = await fetch("http://mugle.org/PilotBoard/select");
+  const data = await res.json();
+
+  return { data };
+};
+
 export default Index;
