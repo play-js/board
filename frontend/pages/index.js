@@ -15,12 +15,11 @@ const dummy = [
   }
 ]
 
-const deleteItem = () => {
-  
-}
+const deleteItem = async (data) => {
+  console.log(data);
+  const req = await fetch(`http://mugle.org/PilotBoard/delete?seq=${data.id}`)
+  //go to list
 
-const editItem = () => {
-  
 }
 
 const tdStyle = {
@@ -39,8 +38,10 @@ const ListItem = data => {
       </td>
       <td style={tdStyle}>{data.name}</td>
       <td style={tdStyle}>
-        <button onClick={deleteItem()}>삭제</button>
-        <button onClick={editItem()}>수정</button>
+        <button onClick={(data) => {deleteItem(data)}}>삭제</button>
+        <Link as={`/w/${data.id}`} href={`/write?id=${data.id}`}>
+          <button>수정</button>
+        </Link>
       </td>
     </tr>
   )

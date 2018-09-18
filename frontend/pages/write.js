@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import Layout from '../components/Layout.js'
 import fetch from 'isomorphic-unfetch'
 
@@ -21,26 +22,8 @@ class Write extends React.Component {
   }
 
   async handleSubmit () {
-    const req = await fetch(`http://mugle.org/PilotBoard/create?id=${this.state.name}&content=${this.state.text}`)
-    const data = await req.json()
-    
-    console.log(`Show data fetched. Count: ${data.length}`)
-
-    // return fetch(`http://mugle.org/PilotBoard/create?id=${this.state.name}&content=${this.state.text}`, {
-    //     method: 'POST',
-    //     body: JSON.stringify(data),
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     }
-    // }).then(response => {
-    //     if (response.status >= 200 && response.status < 300) {
-    //         return response;
-    //         console.log(response);
-    //         window.location.reload();
-    //       } else {
-    //       console.log('Somthing happened wrong');
-    //       }
-    // }).catch(err => err);
+    const req = await fetch(`http://mugle.org/PilotBoard/create?id=${this.state.name}&title=${this.state.title}&content=${this.state.text}`)
+    //go to list
   }
 
   render() {
@@ -68,11 +51,27 @@ class Write extends React.Component {
               <textarea rows='4' cols='50' type='text' value={this.state.text} onChange={this.handleChange('text')} />
             </label>
           </div>
-          <input type='submit' value='Submit' />
+          <Link href="/index">
+            <input type='submit' value='Submit' />
+          </Link>
         </form>
       </Layout>
     )
   }
 };
+
+Write.getInitialProps = async function (context) {
+  // const { id } = context.query
+  // const res = await fetch(`http://mugle.org/PilotBoard/select/${id}`)
+  // const data = await res.json()
+
+  // this.setState({
+  //     name: data.name,
+  //     title: data.title,
+  //     text: data.cotent
+  // })
+
+  return {  }
+}
 
 export default Write;
