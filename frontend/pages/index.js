@@ -24,20 +24,30 @@ function getPosts() {
   ];
 }
 
+const PostLink = props => {
+  console.log(props.post);
+
+  return (
+    <li>
+      <Link href={`/post?title=${props.title}?post=${props.post}`}>
+        <a>{props.post.title}</a>
+      </Link>
+    </li>
+  );
+};
+
 const Index = () => (
   <Layout>
     <h1>게시판</h1>
     <ul>
-      {getPosts().map(
-        (post, index) =>
-          post.title ? (
-            <li key={index}>
-              <Link href={`/post?title=${post.title}`}>
-                <a>{post.title}</a>
-              </Link>
-            </li>
-          ) : null
-      )}
+      {getPosts().map((post, index) => {
+        console.log(post);
+        return post.title ? (
+          <PostLink key={index} post={post} title={post.title}>
+            <a>{post.title}</a>
+          </PostLink>
+        ) : null;
+      })}
     </ul>
     <Link href="/write">
       <button>게시물 작성</button>
