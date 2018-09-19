@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Layout from '../components/Layout.js'
 import fetch from 'isomorphic-unfetch'
+import { createPost } from '../api/posts'
 
 class Write extends React.Component {
   constructor(props) {
@@ -22,7 +23,10 @@ class Write extends React.Component {
   }
 
   async handleSubmit () {
-    const req = await fetch(`http://mugle.org/PilotBoard/create?id=${this.state.name}&title=${this.state.title}&content=${this.state.text}`)
+    const {name, title, text} = this.state;
+    const req = await createPost(name, title, text)
+
+    window.alert("created Post!");
     //go to list
   }
 
@@ -51,18 +55,16 @@ class Write extends React.Component {
               <textarea rows='4' cols='50' type='text' value={this.state.text} onChange={this.handleChange('text')} />
             </label>
           </div>
-          <Link href="/index">
-            <input type='submit' value='Submit' />
-          </Link>
+          <input type='submit' value='Submit' />
         </form>
       </Layout>
     )
   }
 };
 
-Write.getInitialProps = async function (context) {
-  // const { id } = context.query
-  // const res = await fetch(`http://mugle.org/PilotBoard/select/${id}`)
+Write.getInitialProps = async (context) => {
+  // const { seq } = context.query
+  // const res = await fetch(`http://mugle.org/PilotBoard/select?seq=${seq}`)
   // const data = await res.json()
 
   // this.setState({

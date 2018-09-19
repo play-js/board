@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Layout from '../components/Layout'
 import fetch from 'isomorphic-unfetch'
+import { getPosts, deletePost } from '../api/posts'
 
 const dummy = [
   {
@@ -17,9 +18,8 @@ const dummy = [
 
 const deleteItem = async (data) => {
   console.log(data);
-  const req = await fetch(`http://mugle.org/PilotBoard/delete?seq=${data.id}`)
+  const req = await deletePost(data.seq)
   //go to list
-
 }
 
 const tdStyle = {
@@ -32,14 +32,14 @@ const ListItem = data => {
   return (
     <tr>
       <td style={tdStyle}>
-        <Link as={`/p/${data.id}`} href={`/post?id=${data.id}`}>
+        <Link as={`/p/${data.seq}`} href={`/post?seq=${data.seq}`}>
           <a>{data.title}</a>
         </Link>
       </td>
       <td style={tdStyle}>{data.name}</td>
       <td style={tdStyle}>
         <button onClick={(data) => {deleteItem(data)}}>삭제</button>
-        <Link as={`/w/${data.id}`} href={`/write?id=${data.id}`}>
+        <Link as={`/w/${data.seq}`} href={`/write?seq=${data.seq}`}>
           <button>수정</button>
         </Link>
       </td>
@@ -60,7 +60,7 @@ const Index = (props) => (
       <tbody>
         {props.data.map((data, index) =>
           <ListItem key={index}
-                    id={data.id}
+                    seq={data.seq}
                     name={data.id}
                     title={data.title} />
         )}
@@ -89,11 +89,11 @@ const Index = (props) => (
   </Layout>
 );
 
-Index.getInitialProps = async function() {
-  const res = await fetch('http://mugle.org/PilotBoard/select')
+Index.getInitialProps = async () => {
+  const res = await getPosts()
   const data = await res.json()
   
-  console.log(`Show data fetched. Count: ${data.length}`)
+  console.log(`${JSON.stringify(data)}`)
 
   return {
     data

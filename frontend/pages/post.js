@@ -1,5 +1,6 @@
 import Layout from '../components/Layout.js'
 import fetch from 'isomorphic-unfetch'
+import { getPost } from '../api/posts'
 
 const Post = (props) => (
     <Layout>
@@ -7,7 +8,7 @@ const Post = (props) => (
             <label>
             Name:
             <br />
-            {props.data.name}
+            {props.data.id}
             </label>
         </div>
         <div>
@@ -27,13 +28,12 @@ const Post = (props) => (
     </Layout>
 )
 
-Post.getInitialProps = async function (context) {
-  const { id } = context.query
-  const res = await fetch(`http://mugle.org/PilotBoard/select/${id}`)//변경
+Post.getInitialProps = async (context) => {
+  const { seq } = context.query
+  const res = await getPost(seq)
   const data = await res.json()
 
-  console.log(`Fetched data: ${data.name}`)
-  console.log(`Fetched data: ${context}, ${context.query}`)
+  console.log(`${JSON.stringify(data)}`)
 
   return { data }
 }
