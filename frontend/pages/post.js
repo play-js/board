@@ -2,12 +2,22 @@ import { withRouter } from "next/router";
 import Layout from "../components/Layout";
 
 const Page = withRouter(props => {
-  console.log(props.router.query.post);
+  const { title, content, id } = props.router.query;
+
   return (
     <Layout>
-      <h1>{props.router.query.title}</h1>
-      {/* <h1>{props.router.query.post.title}</h1> */}
-      {/* <p>{props.router.query.post.content}</p> */}
+      <h1>{title}</h1>
+      <h2>{id}</h2>
+      <hr />
+      <p>{content}</p>
+      <style jsx>
+        {`
+          h2 {
+            color: #aaa;
+            text-align: right;
+          }
+        `}
+      </style>
     </Layout>
   );
 });
