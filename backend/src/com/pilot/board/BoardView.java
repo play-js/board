@@ -16,12 +16,13 @@ import com.google.gson.Gson;
 import com.pilot.board.model.BoardBean;
 import com.pilot.board.model.BoardDAO;
 
-@WebServlet("/select")
-public class BoardSelect extends HttpServlet {
-
+@WebServlet("/view")
+public class BoardView extends HttpServlet {
+	
+	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
-	throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 		 FilterChain filterChain = new FilterChain(){
 				@Override
 				public void doFilter(ServletRequest arg0, ServletResponse arg1) throws IOException, ServletException {
@@ -29,25 +30,27 @@ public class BoardSelect extends HttpServlet {
 				}
 		 };
 		 
-		  if(req.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(req.getMethod())) {        	
-	            resp.addHeader("Access-Control-Allow-Origin", "*");
-	            resp.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-	            resp.addHeader("Access-Control-Allow-Headers", "content-type, accept, api_id, api_key");
-	            resp.addHeader("Access-Control-Max-Age", "1800");
-	        }
+	  if(req.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(req.getMethod())) {        	
+            resp.addHeader("Access-Control-Allow-Origin", "*");
+            resp.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+            resp.addHeader("Access-Control-Allow-Headers", "content-type, accept, api_id, api_key");
+            resp.addHeader("Access-Control-Max-Age", "1800");
+       }
 
 	   filterChain.doFilter(req, resp);
-		BoardDAO dao = BoardDAO.getInstance();
+	   
+	  
+	   BoardDAO dao = BoardDAO.getInstance();
 		
-		List<BoardBean> list = dao.selectPost();
+	   List<BoardBean> list = dao.selectView(req.getParameter("seq"));
 		
-		String json = new Gson().toJson(list);
+		String json = new Gson().toJson(list.get(0));
 		
 		
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("UTF-8");
 		resp.getWriter().write(json);
 		
+		
 	}
-	
 }

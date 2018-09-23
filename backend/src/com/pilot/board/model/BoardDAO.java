@@ -49,7 +49,7 @@ public class BoardDAO {
 		
 		try {
 		
-			PreparedStatement pstat = conn.prepareStatement("SELECT seq, id, content, title FROM T_BOARD");
+			PreparedStatement pstat = conn.prepareStatement("SELECT seq, id, content, title FROM T_BOARD ORDER BY seq DESC");
 
 			ResultSet rs = pstat.executeQuery();
 			
@@ -57,9 +57,10 @@ public class BoardDAO {
 			while (rs.next()) {
 				BoardBean bean = new BoardBean();
 				
-				bean.setId(rs.getString(1));
-				bean.setContent(rs.getString(2));
-				bean.setTitle(rs.getString(3));
+				bean.setSeq(rs.getString(1));
+				bean.setId(rs.getString(2));
+				bean.setContent(rs.getString(3));
+				bean.setTitle(rs.getString(4));
 				
 				list.add(bean);
 			}
@@ -104,5 +105,36 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public List<BoardBean> selectView(String seq) {
+		
+		List<BoardBean> list = new ArrayList<>();
+		
+		try {
+		
+			PreparedStatement pstat = conn.prepareStatement("SELECT seq, id, content, title FROM T_BOARD WHERE seq = ? ORDER BY seq DESC");
+
+			pstat.setString(1, seq);
+			
+			ResultSet rs = pstat.executeQuery();
+			
+			
+			while (rs.next()) {
+				BoardBean bean = new BoardBean();
+				
+				bean.setSeq(rs.getString(1));
+				bean.setId(rs.getString(2));
+				bean.setContent(rs.getString(3));
+				bean.setTitle(rs.getString(4));
+				
+				list.add(bean);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 }
