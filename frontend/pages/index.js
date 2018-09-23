@@ -3,17 +3,21 @@ import Layout from "../components/Layout";
 import Button from "../components/Button";
 import fetch from "isomorphic-unfetch";
 
-const PostLink = props => {
-  // console.log(props.post);
+const deletePost = async seq => {
+  await fetch(`http://mugle.org/PilotBoard/delete?seq=${seq}`);
+};
 
+const PostLink = ({ post: { id, seq, title, content } }) => {
   return (
     <li>
-      <Link href={`/post?title=${props.title}?post=${props.post}`}>
-        <a>{props.post.title}</a>
+      <Link href={`/post?title=${title}&id=${id}&content=${content}`}>
+        <a>{title}</a>
       </Link>
       <div>
         <Button onClick={() => console.log(123123)}>수정</Button>
-        <Button color="red">삭제</Button>
+        <Button color="red" onClick={() => deletePost(seq)}>
+          삭제
+        </Button>
       </div>
       <style jsx>
         {`
@@ -33,7 +37,7 @@ const Index = props => (
     <ul>
       {props.data.map((post, index) => {
         return post.title ? (
-          <PostLink key={index} post={post} title={post.title}>
+          <PostLink key={index} post={post}>
             <a>{post.title}</a>
           </PostLink>
         ) : null;
