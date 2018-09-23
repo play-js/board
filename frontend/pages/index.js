@@ -3,29 +3,6 @@ import Layout from "../components/Layout";
 import Button from "../components/Button";
 import fetch from "isomorphic-unfetch";
 
-function getPosts() {
-  return [
-    {
-      id: "test123",
-      title: "타이틀이다ㅏㅏㅏ1",
-      content: "하이루~"
-    },
-    {
-      id: "대건",
-      title: "타이틀이다ㅏㅏㅏ2",
-      content: "하이루"
-    },
-    {},
-    {},
-    {},
-    {
-      id: "james",
-      title: "타이틀이다ㅏㅏㅏ3",
-      content: "hello"
-    }
-  ];
-}
-
 const PostLink = props => {
   // console.log(props.post);
 
