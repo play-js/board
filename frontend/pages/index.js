@@ -4,7 +4,11 @@ import Button from "../components/Button";
 import fetch from "isomorphic-unfetch";
 
 const deletePost = async seq => {
-  await fetch(`http://mugle.org/PilotBoard/delete?seq=${seq}`);
+  await fetch(`http://mugle.org/PilotBoard/delete?seq=${seq}`, {
+    mode: "no-cors"
+  });
+  alert("삭제 완료!");
+  window.location.reload();
 };
 
 const PostLink = ({ post: { id, seq, title, content } }) => (

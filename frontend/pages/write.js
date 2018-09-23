@@ -1,5 +1,6 @@
 import Button from "../components/Button";
 import fetch from "isomorphic-unfetch";
+// import Router, { withRouter } from "next/router";
 import { withRouter } from "next/router";
 
 class Write extends React.Component {
@@ -23,7 +24,7 @@ class Write extends React.Component {
       uri = `http://mugle.org/PilotBoard/update?seq=${seq}&id=${author}&content=${content}&title=${title}`;
     }
 
-    await fetch(uri, { mode: "cors" });
+    await fetch(uri, { mode: "no-cors" });
 
     this.setState({
       title: "",
@@ -31,6 +32,8 @@ class Write extends React.Component {
       author: ""
     });
     alert("작성 완료!");
+    // Router.push("/"); // Client side
+    window.location.replace("/"); // Server side
   };
 
   handleChange = name => event => {
