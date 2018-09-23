@@ -7,29 +7,29 @@ const deletePost = async seq => {
   await fetch(`http://mugle.org/PilotBoard/delete?seq=${seq}`);
 };
 
-const PostLink = ({ post: { id, seq, title, content } }) => {
-  return (
-    <li>
-      <Link href={`/post?title=${title}&id=${id}&content=${content}`}>
-        <a>{title}</a>
+const PostLink = ({ post: { id, seq, title, content } }) => (
+  <li>
+    <Link href={`/post?title=${title}&id=${id}&content=${content}`}>
+      <a>{title}</a>
+    </Link>
+    <div>
+      <Link href={{ pathname: "write", query: { id, title, seq, content } }}>
+        <Button>수정</Button>
       </Link>
-      <div>
-        <Button onClick={() => console.log(123123)}>수정</Button>
-        <Button color="red" onClick={() => deletePost(seq)}>
-          삭제
-        </Button>
-      </div>
-      <style jsx>
-        {`
-          li {
-            display: flex;
-            justify-content: space-between;
-          }
-        `}
-      </style>
-    </li>
-  );
-};
+      <Button color="red" onClick={() => deletePost(seq)}>
+        삭제
+      </Button>
+    </div>
+    <style jsx>
+      {`
+        li {
+          display: flex;
+          justify-content: space-between;
+        }
+      `}
+    </style>
+  </li>
+);
 
 const Index = props => (
   <Layout>

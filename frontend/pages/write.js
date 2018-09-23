@@ -1,21 +1,30 @@
-// import React from "react";
 import Button from "../components/Button";
 import fetch from "isomorphic-unfetch";
+import { withRouter } from "next/router";
 
 class Write extends React.Component {
-  state = {
-    title: "",
-    content: "",
-    author: ""
-  };
+  constructor(props) {
+    super(props);
+
+    const { id, seq, title, content } = props.router.query;
+    this.state = {
+      title,
+      content,
+      author: id,
+      seq
+    };
+  }
 
   handleSubmit = async () => {
-    const { title, content, author } = this.state;
+    const { title, content, author, seq } = this.state;
+    let uri = `http://mugle.org/PilotBoard/create?id=${author}&content=${content}&title=${title}`;
 
-    const res = await fetch(
-      `http://mugle.org/PilotBoard/create?id=${author}&content=${content}&title=${title}`,
-      { mode: "cors" }
-    );
+    if (seq) {
+      uri = `http://mugle.org/PilotBoard/update?seq=${seq}&id=${author}&content=${content}&title=${title}`;
+    }
+
+    await fetch(uri, { mode: "cors" });
+
     this.setState({
       title: "",
       content: "",
@@ -48,4 +57,4 @@ class Write extends React.Component {
     );
   }
 }
-export default Write;
+export default withRouter(Write);
