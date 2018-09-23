@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import Layout from "../components/Layout";
 import Button from "../components/Button";
@@ -36,21 +37,33 @@ const PostLink = ({ post: { id, seq, title, content } }) => (
 );
 
 const Index = props => (
-  <Layout>
-    <h1>게시판</h1>
-    <ul>
-      {props.data.map((post, index) => {
-        return post.title ? (
-          <PostLink key={index} post={post}>
-            <a>{post.title}</a>
-          </PostLink>
-        ) : null;
-      })}
-    </ul>
-    <Link href="/write">
-      <Button>게시물 작성</Button>
-    </Link>
-  </Layout>
+  <React.Fragment>
+    <Head>
+      <link
+        href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo"
+        rel="stylesheet"
+      />
+      <link
+        href="https://fonts.googleapis.com/css?family=Noto+Sans+KR"
+        rel="stylesheet"
+      />
+    </Head>
+    <Layout>
+      <h1>게시판</h1>
+      <ul>
+        {props.data.map((post, index) => {
+          return post.title ? (
+            <PostLink key={index} post={post}>
+              <a>{post.title}</a>
+            </PostLink>
+          ) : null;
+        })}
+      </ul>
+      <Link href="/write">
+        <Button>게시물 작성</Button>
+      </Link>
+    </Layout>
+  </React.Fragment>
 );
 
 Index.getInitialProps = async function() {
