@@ -54,10 +54,19 @@ const Index = props => (
 );
 
 Index.getInitialProps = async function() {
-  const res = await fetch("http://mugle.org/PilotBoard/select");
-  const data = await res.json();
+  try {
+    const res = await fetch("http://mugle.org/PilotBoard/select", {
+      mode: "no-cors"
+    });
+    console.log(res);
+    const data = await res.json();
 
-  return { data };
+    return { data };
+  } catch (error) {
+    console.log("#############");
+    console.error(error);
+    console.log("#############");
+  }
 };
 
 export default Index;
