@@ -3,9 +3,10 @@ import Link from "next/link";
 import Layout from "../components/Layout";
 import Button from "../components/Button";
 import fetch from "isomorphic-unfetch";
+import { server } from "../config.json";
 
 const deletePost = async seq => {
-  await fetch(`http://mugle.org/PilotBoard/delete?seq=${seq}`, {
+  await fetch(`${server.url}/delete?seq=${seq}`, {
     mode: "no-cors"
   });
   alert("삭제 완료!");
@@ -68,7 +69,7 @@ const Index = props => (
 
 Index.getInitialProps = async function() {
   try {
-    const res = await fetch("http://mugle.org/PilotBoard/select", {
+    const res = await fetch(`${server.url}select`, {
       mode: "no-cors"
     });
     console.log(res);

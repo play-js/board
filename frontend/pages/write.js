@@ -2,6 +2,7 @@ import Button from "../components/Button";
 import fetch from "isomorphic-unfetch";
 // import Router, { withRouter } from "next/router";
 import { withRouter } from "next/router";
+import { server } from "../config.json";
 
 class Write extends React.Component {
   constructor(props) {
@@ -18,10 +19,14 @@ class Write extends React.Component {
 
   handleSubmit = async () => {
     const { title, content, author, seq } = this.state;
-    let uri = `http://mugle.org/PilotBoard/create?id=${author}&content=${content}&title=${title}`;
+    let uri = `${
+      server.url
+    }create?id=${author}&content=${content}&title=${title}`;
 
     if (seq) {
-      uri = `http://mugle.org/PilotBoard/update?seq=${seq}&id=${author}&content=${content}&title=${title}`;
+      uri = `${
+        server.url
+      }update?seq=${seq}&id=${author}&content=${content}&title=${title}`;
     }
 
     await fetch(uri, { mode: "no-cors" });
