@@ -4,8 +4,7 @@ import css from "styled-jsx/css";
 function getButtonStyles(color) {
   return css.resolve`
     button {
-      background-color: rgb(20, 185, 214);
-      background-color: ${color};
+      background-color: ${color ? color : "rgb(20, 185, 214)"};
       height: 50px;
       width: 200px;
       font-size: 20px;
@@ -28,13 +27,6 @@ export default props => {
         {children}
       </button>
       {styles}
-      <style jsx>
-        {`
-          button {
-            color: ${color};
-          }
-        `}
-      </style>
     </Fragment>
   );
 };

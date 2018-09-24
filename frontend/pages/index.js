@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import Button from "../components/Button";
 import fetch from "isomorphic-unfetch";
 import { server } from "../config.json";
+import dummy from "../dummy.json";
 
 const deletePost = async seq => {
   await fetch(`${server.url}/delete?seq=${seq}`, {
@@ -66,20 +67,25 @@ const Index = props => (
     </Layout>
   </React.Fragment>
 );
-
 Index.getInitialProps = async function() {
-  try {
-    const res = await fetch(`${server.url}select`, {
-      mode: "no-cors"
-    });
-    console.log(res);
-    const data = await res.json();
+  const isDummyMode = process.env.DUMMY_MODE;
 
-    return { data };
-  } catch (error) {
-    console.log("#############");
-    console.error(error);
-    console.log("#############");
+  if (isDummyMode) {
+    return { data: dummy };
+  } else {
+    try {
+      const res = await fetch(`${server.url}select`, {
+        mode: "no-cors"
+      });
+      // console.log(res);
+      const data = await res.json();
+
+      return { data };
+    } catch (error) {
+      console.log("#############");
+      console.error(error);
+      console.log("#############");
+    }
   }
 };
 
