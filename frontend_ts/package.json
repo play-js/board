@@ -5,14 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next",
+    "dev": "node server.js",
+    "dev:dummy": "DUMMY_MODE=true node server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "next": "^6.1.1",
+    "express": "^4.16.3",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^7.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
   }
