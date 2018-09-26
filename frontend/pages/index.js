@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import Layout from "../components/Layout";
-import Button from "../components/Button";
+import { Layout, Button } from "../components";
 import fetch from "isomorphic-unfetch";
 import { server } from "../config.json";
 import dummy from "../dummy.json";
@@ -16,7 +15,10 @@ const deletePost = async seq => {
 
 const PostLink = ({ post: { id, seq, title, content } }) => (
   <li>
-    <Link href={`/post?title=${title}&id=${id}&content=${content}`}>
+    <Link
+      as={`/p/${seq}`}
+      href={`/post?title=${title}&id=${id}&content=${content}`}
+    >
       <a>{title}</a>
     </Link>
     <div>

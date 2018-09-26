@@ -1,5 +1,5 @@
 import { withRouter } from "next/router";
-import Layout from "../components/Layout";
+import { Layout } from "../components";
 
 const Page = withRouter(props => {
   const { title, content, id } = props.router.query;
@@ -12,6 +12,9 @@ const Page = withRouter(props => {
       <p>{content}</p>
       <style jsx>
         {`
+          h1 {
+            text-align: center;
+          }
           h2 {
             color: #aaa;
             text-align: right;

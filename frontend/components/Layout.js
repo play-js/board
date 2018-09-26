@@ -10,7 +10,10 @@ const Layout = props => {
           div {
             padding: 20px;
             margin: 20px;
-            border: 1px solid #ddd;
+            background-color: #eee;
+             {
+              /* border: 1px solid #eee; */
+            }
           }
         `}
       </style>

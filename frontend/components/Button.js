@@ -4,9 +4,10 @@ import css from "styled-jsx/css";
 function getButtonStyles(color) {
   return css.resolve`
     button {
+      flex: 1;
       background-color: ${color ? color : "rgb(20, 185, 214)"};
-      height: 50px;
-      width: 200px;
+      height: 40px;
+      min-width: 200px;
       font-size: 20px;
       outline: none;
       border: none;

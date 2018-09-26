@@ -3,6 +3,7 @@ import fetch from "isomorphic-unfetch";
 // import Router, { withRouter } from "next/router";
 import { withRouter } from "next/router";
 import { server } from "../config.json";
+import { Layout, Input } from "../components";
 
 class Write extends React.Component {
   constructor(props) {
@@ -50,18 +51,41 @@ class Write extends React.Component {
     const { title, content, author } = this.state;
 
     return (
-      <div>
+      <Layout>
         <div>
-          title :<input value={title} onChange={handleChange("title")} />
+          <Input
+            placeholder="Title"
+            value={title}
+            onChange={handleChange("title")}
+          />
         </div>
         <div>
-          content :<input value={content} onChange={handleChange("content")} />
+          <Input
+            placeholder="Content"
+            value={content}
+            onChange={handleChange("content")}
+          />
         </div>
         <div>
-          작성자 :<input value={author} onChange={handleChange("author")} />
+          <Input
+            placeholder="Author"
+            value={author}
+            onChange={handleChange("author")}
+          />
         </div>
-        <Button onClick={handleSubmit}>submit</Button>
-      </div>
+        <div>
+          <Button onClick={handleSubmit}>submit</Button>
+        </div>
+        <style jsx>
+          {`
+            div {
+              display: flex;
+              align-self: stretch;
+              justify-self: stretch;
+            }
+          `}
+        </style>
+      </Layout>
     );
   }
 }
