@@ -14,7 +14,8 @@ class Write extends React.Component {
       title,
       content,
       author: id,
-      seq
+      seq,
+      mode: title ? "Edit " : "Write "
     };
   }
 
@@ -48,22 +49,19 @@ class Write extends React.Component {
 
   render() {
     const { handleSubmit, handleChange } = this;
-    const { title, content, author } = this.state;
+    const { title, content, author, mode } = this.state;
 
     return (
       <Layout>
+        <h1>
+          {mode}
+          Post
+        </h1>
         <div>
           <Input
             placeholder="Title"
             value={title}
             onChange={handleChange("title")}
-          />
-        </div>
-        <div>
-          <Input
-            placeholder="Content"
-            value={content}
-            onChange={handleChange("content")}
           />
         </div>
         <div>
@@ -74,14 +72,24 @@ class Write extends React.Component {
           />
         </div>
         <div>
+          <Input
+            placeholder="Content"
+            value={content}
+            onChange={handleChange("content")}
+          />
+        </div>
+
+        <div>
           <Button onClick={handleSubmit}>submit</Button>
         </div>
         <style jsx>
           {`
+            h1 {
+              text-align: center;
+            }
             div {
               display: flex;
-              align-self: stretch;
-              justify-self: stretch;
+              justify-content: flex-end;
             }
           `}
         </style>

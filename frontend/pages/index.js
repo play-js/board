@@ -23,10 +23,12 @@ const PostLink = ({ post: { id, seq, title, content } }) => (
     </Link>
     <div>
       <Link href={{ pathname: "write", query: { id, title, seq, content } }}>
-        <Button>수정</Button>
+        <Button color="#12b886" half>
+          Edit
+        </Button>
       </Link>
-      <Button color="red" onClick={() => deletePost(seq)}>
-        삭제
+      <Button color="red" half onClick={() => deletePost(seq)}>
+        Delete
       </Button>
     </div>
     <style jsx>
@@ -34,6 +36,17 @@ const PostLink = ({ post: { id, seq, title, content } }) => (
         li {
           display: flex;
           justify-content: space-between;
+          align-items: center;
+          font-size: 20px;
+          background-color: white;
+          padding: 8px 16px;
+        }
+        li:hover {
+          background-color: #bbb;
+        }
+        a {
+          text-decoration: none;
+          color: black;
         }
       `}
     </style>
@@ -53,7 +66,12 @@ const Index = props => (
       />
     </Head>
     <Layout>
-      <h1>게시판</h1>
+      <h1>
+        Board
+        <Link href="/write">
+          <Button>Write</Button>
+        </Link>
+      </h1>
       <ul>
         {props.data.map((post, index) => {
           return post.title ? (
@@ -63,10 +81,15 @@ const Index = props => (
           ) : null;
         })}
       </ul>
-      <Link href="/write">
-        <Button>게시물 작성</Button>
-      </Link>
     </Layout>
+    <style jsx>
+      {`
+        h1 {
+          display: flex;
+          justify-content: space-between;
+        }
+      `}
+    </style>
   </React.Fragment>
 );
 Index.getInitialProps = async function() {

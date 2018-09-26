@@ -10,6 +10,13 @@ app
   .then(() => {
     const server = express();
 
+    server.get("/post/:seq", (req, res) => {
+      console.log(req.params);
+      const actualPage = "/post";
+      const queryParams = { seq: req.params.seq };
+      app.render(req, res, actualPage, queryParams);
+    });
+
     server.get("*", (req, res) => {
       return handle(req, res);
     });

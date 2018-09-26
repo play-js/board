@@ -1,16 +1,20 @@
 import { Fragment } from "react";
 import css from "styled-jsx/css";
 
-function getButtonStyles(color) {
+function getButtonStyles(props) {
+  const { fullWidth, color, half } = props;
+
   return css.resolve`
     button {
-      flex: 1;
+      flex: ${fullWidth ? 1 : 0};
       background-color: ${color ? color : "rgb(20, 185, 214)"};
       height: 40px;
-      min-width: 200px;
+      min-width: ${half ? "100px" : "200px"};
       font-size: 20px;
+      font-weight: 600;
       outline: none;
       border: none;
+      border-radius: 4px;
       color: white;
       font-family: 'Noto Sans KR', 'Nanum Myeongjo', sans-serif;
       cursor: pointer;
@@ -19,8 +23,8 @@ function getButtonStyles(color) {
 }
 
 export default props => {
-  const { onClick, children, color } = props;
-  const { className, styles } = getButtonStyles(color);
+  const { onClick, children } = props;
+  const { className, styles } = getButtonStyles(props);
 
   return (
     <Fragment>
