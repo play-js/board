@@ -13,3 +13,15 @@
 - [ ] styling
 - [ ] deploy
   - [ ] Server CORS
+
+## Config
+
+`/config.json`
+
+```
+{
+  "server": {
+    "url": "YOUR_SERVER_ADDRESS"
+  }
+}
+```
