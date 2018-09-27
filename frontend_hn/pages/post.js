@@ -1,6 +1,7 @@
 import Layout from '../components/Layout.js'
 import fetch from 'isomorphic-unfetch'
 import { getPost } from '../api/posts'
+import { withRouter } from "next/router";
 
 const Post = (props) => (
     <Layout>
@@ -38,4 +39,4 @@ Post.getInitialProps = async (context) => {
   return { data }
 }
 
-export default Post
+export default withRouter(Post)

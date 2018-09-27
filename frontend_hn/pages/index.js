@@ -19,6 +19,7 @@ const dummy = [
 const deleteItem = async (data) => {
   console.log(data);
   const req = await deletePost(data.seq)
+  window.location.reload();
   //go to list
 }
 

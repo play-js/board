@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { withRouter } from "next/router";
 import Layout from '../components/Layout.js'
 import fetch from 'isomorphic-unfetch'
 import { createPost } from '../api/posts'
@@ -27,6 +28,7 @@ class Write extends React.Component {
     const req = await createPost(name, title, text)
 
     window.alert("created Post!");
+    window.location.replace("/");
     //go to list
   }
 
@@ -76,4 +78,4 @@ Write.getInitialProps = async (context) => {
   return {  }
 }
 
-export default Write;
+export default withRouter(Write);
