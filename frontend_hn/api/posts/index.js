@@ -5,7 +5,7 @@ export function getPosts() {
 }
 
 export function getPost(seq) {
-  return fetch(`http://52.70.180.248/select?seq=${seq}`, {mode: "no-cors"})
+  return fetch(`http://52.70.180.248/view?seq=${seq}`, {mode: "no-cors"})
 }
 
 export function createPost(name, title, content) {

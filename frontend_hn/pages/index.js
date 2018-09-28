@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Layout from '../components/Layout'
+import Button from '../components/Button'
 import fetch from 'isomorphic-unfetch'
 import { getPosts, deletePost } from '../api/posts'
 
@@ -23,27 +24,41 @@ const deleteItem = async (data) => {
   //go to list
 }
 
-const tdStyle = {
-  padding: '15px',
-  border: '1px solid #ddd',
-  textAlign: 'left'
-}
-
 const ListItem = data => {
+  const {seq, name, title, content} = data;
   return (
     <tr>
-      <td style={tdStyle}>
-        <Link as={`/p/${data.seq}`} href={`/post?seq=${data.seq}`}>
-          <a>{data.title}</a>
+      <td>
+        <Link as={`/p/${seq}`} href={`/post?seq=${seq}&id=${name}&title=${title}&content=${content}`}>
+          <a>{title}</a>
         </Link>
       </td>
-      <td style={tdStyle}>{data.name}</td>
-      <td style={tdStyle}>
-        <button onClick={(data) => {deleteItem(data)}}>삭제</button>
-        <Link as={`/w/${data.seq}`} href={`/write?seq=${data.seq}`}>
-          <button>수정</button>
+      <td>{name}</td>
+      <td>
+        <Button onClickCallback={(data) => {deleteItem(data)}} text="Delete"/>
+        <Link as={`/w/${seq}`} href={`/write?seq=${seq}`}>
+          <Button text="Edit"/>
         </Link>
       </td>
+    <style jsx>{`
+      th {
+        padding: 5px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+      tr:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+      td {
+        padding: 5px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+      a {
+        text-decoration: none;
+        color: palevioletred;
+      }
+    `}</style>
     </tr>
   )
 }
@@ -53,7 +68,7 @@ const Index = (props) => (
     <table>
       <thead>
         <tr>
-          <th style={{width: '70%'}}>Title</th>
+          <th>Title</th>
           <th>Name</th>
           <th></th>
         </tr>
@@ -68,23 +83,12 @@ const Index = (props) => (
       </tbody>
     </table>
     <Link href="/write">
-      <button>게시물 작성</button>
+      <Button text="Write"/>
     </Link>
     <style jsx>{`
       table {
         border-collapse: collapse;
         width: 100%;
-        border: 1px solid #ddd;
-      }
-      td {
-        padding: 15px;
-        border: 1px solid #ddd;
-        text-align: left;
-      }
-      th {
-        padding: 15px;
-        border: 1px solid #ddd;
-        text-align: left;
       }
     `}</style>
   </Layout>
@@ -94,7 +98,7 @@ Index.getInitialProps = async () => {
   const res = await getPosts()
   const data = await res.json()
   
-  console.log(`${JSON.stringify(data)}`)
+  // console.log(`${JSON.stringify(data)}`)
 
   return {
     data
