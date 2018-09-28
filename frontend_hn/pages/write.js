@@ -1,18 +1,21 @@
-import React from "react";
-import Link from "next/link";
-import { withRouter } from "next/router";
-import Layout from '../components/Layout.js'
+import React from "react"
+import Link from "next/link"
+import { withRouter } from "next/router"
+import Layout from '../components/Layout'
+import Button from '../components/Button'
 import fetch from 'isomorphic-unfetch'
-import { createPost } from '../api/posts'
+import { createPost, updatePost } from '../api/posts'
 
 class Write extends React.Component {
   constructor(props) {
     super(props);
 
+    const { seq, id, title, content } = props.router.query;
+
     this.state = {
-      name: "",
-      title: "",
-      text: ""
+      id: id || "",
+      title: title || "",
+      content: content || ""
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -23,59 +26,64 @@ class Write extends React.Component {
       this.setState({[value]: e.target.value})
   }
 
-  async handleSubmit () {
-    const {name, title, text} = this.state;
-    const req = await createPost(name, title, text)
+  handleSubmit = async () => {
+    const data = this.props.router.query;
+    const {id, title, content} = this.state;
+    
+    if (!(id && title && content)) {
+      window.alert("Please enter valid values!");
+      //validation check (special characters)
+      return;
+    }
 
-    window.alert("created Post!");
+    if (data.hasOwnProperty("seq")) {
+      const req = await updatePost(data.seq, id, title, content)
+      window.alert("Edited your post!");
+    } else {
+      const req = await createPost(id, title, content)
+      window.alert("Created your post!");
+    }
+
     window.location.replace("/");
-    //go to list
   }
 
   render() {
     return (
       <Layout>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>
-            Name:
-            <br />
-              <input type='text' value={this.state.name} onChange={this.handleChange('name')} />
-            </label>
-          </div>
-          <div>
-            <label>
-            Title:
-            <br />
-              <input type='text' value={this.state.title} onChange={this.handleChange('title')} />
-            </label>
-          </div>
-          <div>
-            <label>
-            Text:
-            <br />
-              <textarea rows='4' cols='50' type='text' value={this.state.text} onChange={this.handleChange('text')} />
-            </label>
-          </div>
-          <input type='submit' value='Submit' />
-        </form>
+        <div>
+          <label>
+          Name:
+          <br />
+            <input type='text' value={this.state.id} onChange={this.handleChange('id')}/>
+          </label>
+        </div>
+        <div>
+          <label>
+          Title:
+          <br />
+            <input type='text' value={this.state.title} onChange={this.handleChange('title')} />
+          </label>
+        </div>
+        <div>
+          <label>
+          Text:
+          <br />
+            <textarea value={this.state.content} onChange={this.handleChange('content')} />
+          </label>
+        </div>
+        <Button onClickCallback={this.handleSubmit} text="Submit"/>
+        <style jsx>{`
+          input {
+            width: 100%;
+          }
+          textarea {
+            width: 100%;
+            height: 300px;
+          }
+        `}</style>
       </Layout>
     )
   }
 };
-
-Write.getInitialProps = async (context) => {
-  // const { seq } = context.query
-  // const res = await fetch(`http://mugle.org/PilotBoard/select?seq=${seq}`)
-  // const data = await res.json()
-
-  // this.setState({
-  //     name: data.name,
-  //     title: data.title,
-  //     text: data.cotent
-  // })
-
-  return {  }
-}
 
 export default withRouter(Write);

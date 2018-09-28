@@ -1,9 +1,10 @@
 const layoutStyle = {
+  display: "flex",
+  flexDirection: "column",
   margin: 20,
   padding: 20,
   border: '1px solid #DDD',
-  color: "palevioletred",
-  textDecoration: "none"
+  color: "palevioletred"
 }
 
 const Layout = (props) => (

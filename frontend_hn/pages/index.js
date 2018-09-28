@@ -17,11 +17,19 @@ const dummy = [
   }
 ]
 
-const deleteItem = async (data) => {
-  console.log(data);
-  const req = await deletePost(data.seq)
+const buttonStyle = {
+  color: "palevioletred",
+  margin: "5px",
+  padding: "5px",
+  border: "2px solid palevioletred",
+  borderRadius: "3px",
+  backgroundColor: "transparent",
+  cursor: "pointer"
+}
+
+const deleteItem = async (seq) => {
+  const req = await deletePost(seq)
   window.location.reload();
-  //go to list
 }
 
 const ListItem = data => {
@@ -35,9 +43,10 @@ const ListItem = data => {
       </td>
       <td>{name}</td>
       <td>
-        <Button onClickCallback={(data) => {deleteItem(data)}} text="Delete"/>
-        <Link as={`/w/${seq}`} href={`/write?seq=${seq}`}>
-          <Button text="Edit"/>
+        <Button onClickCallback={() => {deleteItem(seq)}} text="Delete"/>
+        <Link as={`/w/${seq}`} href={`/write?seq=${seq}&id=${name}&title=${title}&content=${content}`}>
+          {/* <Button text="Edit"/> */}
+          <button style={buttonStyle}>Edit</button>
         </Link>
       </td>
     <style jsx>{`
@@ -65,6 +74,7 @@ const ListItem = data => {
 
 const Index = (props) => (
   <Layout>
+    <div>BOARD</div>
     <table>
       <thead>
         <tr>
@@ -78,17 +88,25 @@ const Index = (props) => (
           <ListItem key={index}
                     seq={data.seq}
                     name={data.id}
-                    title={data.title} />
+                    title={data.title}
+                    content={data.content} />
         )}
       </tbody>
     </table>
     <Link href="/write">
-      <Button text="Write"/>
+      {/* <Button text="Write"/> */}
+      <button style={buttonStyle}>Write</button>
     </Link>
     <style jsx>{`
       table {
         border-collapse: collapse;
         width: 100%;
+        margin: 20px 0;
+      }
+      div {
+        font-size: 30pt;
+        text-align: center;
+        margin: 20px 0;
       }
     `}</style>
   </Layout>
