@@ -1,8 +1,8 @@
 export default props => {
-  const { chilren } = props;
+  const { chilren, ...rest } = props;
   return (
     <div>
-      <input {...props}>{chilren}</input>
+      <input {...rest}>{chilren}</input>
       <style jsx>
         {`
           div {

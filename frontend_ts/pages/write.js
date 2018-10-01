@@ -9,7 +9,7 @@ class Write extends React.Component {
   constructor(props) {
     super(props);
 
-    const { id, seq, title, content } = props.router.query;
+    const { id = "", seq, title = "", content = "" } = props.router.query;
     this.state = {
       title,
       content,
