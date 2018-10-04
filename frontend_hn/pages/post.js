@@ -1,8 +1,5 @@
 import Layout from '../components/Layout.js'
 import Button from '../components/Button'
-import Link from "next/link"
-import fetch from 'isomorphic-unfetch'
-import { getPost } from '../api/posts'
 import { withRouter } from "next/router"
 
 const Wrap = (props) => (

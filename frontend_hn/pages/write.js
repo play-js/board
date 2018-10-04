@@ -1,16 +1,14 @@
 import React from "react"
-import Link from "next/link"
 import { withRouter } from "next/router"
 import Layout from '../components/Layout'
 import Button from '../components/Button'
-import fetch from 'isomorphic-unfetch'
 import { createPost, updatePost } from '../api/posts'
 
 class Write extends React.Component {
   constructor(props) {
     super(props);
 
-    const { seq, id, title, content } = props.router.query;
+    const { id, title, content } = props.router.query;
 
     this.state = {
       id: id || "",

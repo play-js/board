@@ -1,21 +1,7 @@
 import Link from "next/link";
 import Layout from '../components/Layout'
 import Button from '../components/Button'
-import fetch from 'isomorphic-unfetch'
 import { getPosts, deletePost } from '../api/posts'
-
-const dummy = [
-  {
-    name: "taesu",
-    title: "안녕하세요!",
-    content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged"
-  },
-  {
-    name: "haneul",
-    title: "hello!",
-    content: " It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
-  }
-]
 
 const buttonStyle = {
   color: "palevioletred",
@@ -116,7 +102,7 @@ Index.getInitialProps = async () => {
   const res = await getPosts()
   const data = await res.json()
   
-  // console.log(`${JSON.stringify(data)}`)
+  console.log(`${JSON.stringify(data)}`)
 
   return {
     data
