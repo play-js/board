@@ -3,6 +3,21 @@ import Layout from '../components/Layout'
 import Button from '../components/Button'
 import { getPosts, deletePost } from '../api/posts'
 
+const dummy = [
+  {
+    "id": "id1",
+    "seq": "1",
+    "title": "title1",
+    "content": "content1"
+  },
+  {
+    "id": "id2",
+    "seq": "2",
+    "title": "title2",
+    "content": "content2"
+  }
+]
+
 const buttonStyle = {
   color: "palevioletred",
   margin: "5px",
@@ -99,13 +114,21 @@ const Index = (props) => (
 );
 
 Index.getInitialProps = async () => {
-  const res = await getPosts()
-  const data = await res.json()
-  
-  console.log(`${JSON.stringify(data)}`)
+  try {
+    const res = await getPosts()
+    console.log("res : ", res)
+    const data = await res.json()
+    
+    console.log(`${JSON.stringify(data)}`)
 
-  return {
-    data
+    return {
+      data
+    }
+  } catch (error) {
+    console.error(error);
+    return {
+      data: dummy
+    }
   }
 }
 
